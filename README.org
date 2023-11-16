@@ -2,8 +2,10 @@
 
 [[https://github.com/balloneij/selection-highlight-mode][file:demo.gif]]
 
-An Emacs minor mode for highlighting matches to the selection. Inspired by the
-~Selection Highlight~ setting found in VS Code.
+An Emacs minor mode for highlighting matches to the selection.
+Highlights matches across all active windows.
+
+Inspired by the ~Selection Highlight~ setting found in VS Code.
 
 * Installation
 
