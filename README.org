@@ -15,7 +15,8 @@ A la ~use-package~ and ~straight~:
 (use-package selection-highlight-mode
   :straight (selection-highlight-mode :type git
                                       :host github
-                                      :repo "balloneij/selection-highlight-mode"))
+                                      :repo "balloneij/selection-highlight-mode")
+  :config (selection-highlight-mode))
 #+end_src
 
 For [[https://github.com/doomemacs/doomemacs][Doomed]] individuals:
