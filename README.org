@@ -1,0 +1,35 @@
+#+title: Selection Highlight Mode
+
+An Emacs minor mode for highlighting matches to the selection. Inspired by the
+~Selection Highlight~ setting found in VS Code.
+
+* Installation
+
+A la ~use-package~ and ~straight~:
+
+#+begin_src emacs-lisp
+(use-package selection-highlight-mode
+  :straight (selection-highlight-mode :type git
+                                      :host github
+                                      :repo "balloneij/selection-highlight-mode"))
+#+end_src
+
+For [[https://github.com/doomemacs/doomemacs][Doomed]] individuals:
+
+#+begin_src emacs-lisp
+;; packages.el
+(package! selection-highlight-mode
+  :recipe (:host github :repo "balloneij/selection-highlight-mode"))
+
+;; config.el
+(use-package! selection-highlight-mode
+  :config (selection-highlight-mode))
+#+end_src
+
+* Changelog
+- ~0.1.0~ Initial release
+
+* License
+Copyright 2023 Isaac Ballone.
+
+Distributed under [[LICENSE][the GNU General Public License, version 3]].
