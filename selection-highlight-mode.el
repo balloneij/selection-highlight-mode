@@ -5,7 +5,7 @@
 ;; Author: Isaac Ballone <isaac@ballone.dev>
 ;; URL: https://github.com/balloneij/selection-highlight-mode
 ;; Keywords: matching
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "25.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -39,6 +39,10 @@
   :group 'selection-highlight
   :type 'natnum)
 
+(defcustom selection-highlight-mode-disable-for-empty-line-p nil
+  "Disable highlighting when the active region contains only spaces and newlines."
+  :group 'selection-highlight
+  :type 'boolean)
 ;;; State
 
 (defvar selection-highlight-mode--active-search nil)
@@ -173,10 +177,12 @@ Keys off WINDOW."
     (let* ((beg (region-beginning))
            (block-cursor? (and (fboundp 'evil-visual-state-p)
                                (evil-visual-state-p)))
-           (end (+ (region-end) (if block-cursor? 1 0))))
-      (when (>= (abs (- end beg)) selection-highlight-mode-min-length)
-        (buffer-substring beg end)))))
-
+           (end (+ (region-end) (if block-cursor? 1 0)))
+           (content (buffer-substring beg end)))
+      (when (and (>= (abs (- end beg)) selection-highlight-mode-min-length)
+                 (or (not selection-highlight-mode-disable-for-empty-line-p)
+                     (not (string= (string-trim content) ""))))
+        content))))
 ;;; Hooks
 
 ;;;###autoload
