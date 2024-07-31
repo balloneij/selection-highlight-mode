@@ -28,6 +28,8 @@
 
 ;;; Code:
 
+(autoload 'cl-some "cl-extra")
+
 ;;; Settings
 
 (defgroup selection-highlight nil
@@ -38,6 +40,11 @@
   "The minimum length of selection before highlighting matches."
   :group 'selection-highlight
   :type 'natnum)
+
+(defcustom selection-highlight-ignored-matches '("^[[:space:]]*$")
+  "Ignore the selection text if it matches one of these regexps."
+  :group 'selection-highlight
+  :type '(repeat regexp))
 
 ;;; State
 
@@ -174,7 +181,9 @@ Keys off WINDOW."
            (block-cursor? (and (fboundp 'evil-visual-state-p)
                                (evil-visual-state-p)))
            (end (+ (region-end) (if block-cursor? 1 0))))
-      (when (>= (abs (- end beg)) selection-highlight-mode-min-length)
+      (when (and (>= (abs (- end beg)) selection-highlight-mode-min-length)
+                 (not (cl-some (lambda (regexp) (string-match-p regexp (buffer-substring beg end)))
+                               selection-highlight-ignored-matches)))
         (buffer-substring beg end)))))
 
 ;;; Hooks
